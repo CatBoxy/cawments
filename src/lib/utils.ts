@@ -28,3 +28,37 @@ export const getURL = (path: string = "") => {
   // Concatenate the URL and the path.
   return path ? `${url}/${path}` : url;
 };
+
+const toastKeyMap: { [key: string]: string[] } = {
+  status: ["status", "status_description"],
+  error: ["error", "error_description"]
+};
+
+export const getToastRedirect = (
+  path: string,
+  toastType: string,
+  toastName: string,
+  toastDescription: string = "",
+  disableButton: boolean = false,
+  arbitraryParams: string = ""
+): string => {
+  const [nameKey, descriptionKey] = toastKeyMap[toastType];
+
+  let redirectPath = `${path}?${nameKey}=${encodeURIComponent(toastName)}`;
+
+  if (toastDescription) {
+    redirectPath += `&${descriptionKey}=${encodeURIComponent(
+      toastDescription
+    )}`;
+  }
+
+  if (disableButton) {
+    redirectPath += `&disable_button=true`;
+  }
+
+  if (arbitraryParams) {
+    redirectPath += `&${arbitraryParams}`;
+  }
+
+  return redirectPath;
+};
