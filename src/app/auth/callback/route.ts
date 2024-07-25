@@ -2,6 +2,7 @@ import { getToastRedirect, getURL } from "@/lib/utils";
 import { createClient } from "../../../lib/supabase/server";
 import { NextResponse } from "next/server";
 import { NextRequest } from "next/server";
+import { handleUserLogin } from "@/lib/auth-helpers/server";
 
 export async function GET(request: NextRequest) {
   // The `/auth/callback` route is required for the server-side auth flow implemented
@@ -24,6 +25,7 @@ export async function GET(request: NextRequest) {
         )
       );
     }
+    await handleUserLogin();
   }
 
   return NextResponse.redirect(
