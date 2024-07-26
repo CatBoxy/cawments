@@ -59,6 +59,5 @@ export const getToastRedirect = (
   if (arbitraryParams) {
     redirectPath += `&${arbitraryParams}`;
   }
-  console.log("redirectPath", redirectPath);
   return redirectPath;
 };
