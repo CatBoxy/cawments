@@ -17,7 +17,6 @@ interface Props extends ButtonHTMLAttributes<HTMLButtonElement> {
 }
 
 const AuthButton = forwardRef<HTMLButtonElement, Props>((props, buttonRef) => {
-  console.log(props.loading);
   const {
     className,
     variant = "flat",

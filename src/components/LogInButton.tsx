@@ -5,10 +5,12 @@ import React, { useEffect, useState } from "react";
 import { Github } from "lucide-react";
 import AuthButton from "./ui/AuthButton/AuthButton";
 import { createClient } from "@/lib/supabase/client";
+import { usePathname } from "next/navigation";
 
 function LogInButton() {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const supabase = createClient();
+  const pathname = usePathname();
 
   useEffect(() => {
     const {
@@ -25,7 +27,7 @@ function LogInButton() {
   const handleSubmit = async () => {
     setIsSubmitting(true);
     try {
-      await signInWithOAuth();
+      await signInWithOAuth(pathname);
     } catch (error) {
       console.error("Error during sign in:", error);
       setIsSubmitting(false);

@@ -1,18 +1,15 @@
 "use client";
 
 import { createClient } from "../supabase/client";
-import { type Provider } from "@supabase/supabase-js";
-import { getURL } from "../utils";
 
-export async function signInWithOAuth() {
-  const provider: Provider = "github";
-
+export async function signInWithOAuth(redirectTo: string = "/") {
   const supabase = createClient();
-  const redirectURL = getURL("/auth/callback");
-  await supabase.auth.signInWithOAuth({
-    provider: provider,
+
+  const { error } = await supabase.auth.signInWithOAuth({
+    provider: "github",
     options: {
-      redirectTo: redirectURL
+      redirectTo: `${window.location.origin}/auth/callback?redirectTo=${redirectTo}`
     }
   });
+  if (error) throw error;
 }

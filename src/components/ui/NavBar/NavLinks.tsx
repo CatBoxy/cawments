@@ -5,12 +5,15 @@ import s from "./NavBar.module.css";
 import { SignOut } from "@/lib/auth-helpers/server";
 import Image from "next/image";
 import LogInButton from "@/components/LogInButton";
+import { usePathname } from "next/navigation";
 
 interface NavlinksProps {
   user?: any;
 }
 
 export default function NavLinks({ user }: NavlinksProps) {
+  const pathname = usePathname();
+
   return (
     <div className="relative flex flex-row justify-between pt-4 align-center">
       <div className="flex items-center flex-1">
@@ -25,7 +28,7 @@ export default function NavLinks({ user }: NavlinksProps) {
       </div>
       <div className="flex justify-end space-x-8">
         {user ? (
-          <button onClick={() => SignOut()} className={s.link}>
+          <button onClick={() => SignOut(pathname)} className={s.link}>
             Sign out
           </button>
         ) : (

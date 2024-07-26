@@ -1,4 +1,4 @@
-import { getToastRedirect, getURL } from "@/lib/utils";
+import { getToastRedirect } from "@/lib/utils";
 import { createClient } from "../../../lib/supabase/server";
 import { NextResponse } from "next/server";
 import { NextRequest } from "next/server";
@@ -9,6 +9,7 @@ export async function GET(request: NextRequest) {
   // by the `@supabase/ssr` package. It exchanges an auth code for the user's session.
   const requestUrl = new URL(request.url);
   const code = requestUrl.searchParams.get("code");
+  const redirectTo = requestUrl.searchParams.get("redirectTo") || "/";
 
   if (code) {
     const supabase = createClient();
@@ -18,7 +19,7 @@ export async function GET(request: NextRequest) {
     if (error) {
       return NextResponse.redirect(
         getToastRedirect(
-          getURL("/"),
+          `${requestUrl.origin}${redirectTo}`,
           "error",
           error.name,
           "Sorry, we weren't able to log you in. Please try again."
@@ -30,7 +31,7 @@ export async function GET(request: NextRequest) {
 
   return NextResponse.redirect(
     getToastRedirect(
-      getURL("/"),
+      `${requestUrl.origin}${redirectTo}`,
       "status",
       "Success!",
       "You are now signed in."
