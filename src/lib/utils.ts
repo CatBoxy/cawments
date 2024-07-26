@@ -26,7 +26,6 @@ export const getURL = (path: string = "") => {
   path = path.replace(/^\/+/, "");
 
   // Concatenate the URL and the path.
-  console.log("getUrl path", path ? `${url}/${path}` : url);
   return path ? `${url}/${path}` : url;
 };
 
@@ -60,6 +59,6 @@ export const getToastRedirect = (
   if (arbitraryParams) {
     redirectPath += `&${arbitraryParams}`;
   }
-
+  console.log("redirectPath", redirectPath);
   return redirectPath;
 };
