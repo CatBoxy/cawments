@@ -15,7 +15,7 @@ export async function SignOut() {
   if (error) {
     console.log(error);
   }
-  return redirect(getURL("/login"));
+  return redirect(getURL("/"));
 }
 
 export async function handleUserLogin() {

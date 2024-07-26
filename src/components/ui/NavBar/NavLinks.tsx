@@ -4,6 +4,7 @@ import Link from "next/link";
 import s from "./NavBar.module.css";
 import { SignOut } from "@/lib/auth-helpers/server";
 import Image from "next/image";
+import LogInButton from "@/components/LogInButton";
 
 interface NavlinksProps {
   user?: any;
@@ -28,9 +29,7 @@ export default function NavLinks({ user }: NavlinksProps) {
             logOut
           </button>
         ) : (
-          <Link href="/login" className={s.link}>
-            Sign In
-          </Link>
+          <LogInButton />
         )}
       </div>
     </div>

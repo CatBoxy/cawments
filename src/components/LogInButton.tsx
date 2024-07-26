@@ -2,11 +2,12 @@
 
 import { signInWithOAuth } from "@/lib/auth-helpers/client";
 import React from "react";
+import { Button } from "./ui/button";
 
 function LogInButton() {
   return (
     <div>
-      <button onClick={() => signInWithOAuth()}>LogIn</button>
+      <Button onClick={() => signInWithOAuth()}>LogIn</Button>
     </div>
   );
 }
