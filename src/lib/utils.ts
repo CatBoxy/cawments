@@ -26,6 +26,7 @@ export const getURL = (path: string = "") => {
   path = path.replace(/^\/+/, "");
 
   // Concatenate the URL and the path.
+  console.log("getUrl path", path ? `${url}/${path}` : url);
   return path ? `${url}/${path}` : url;
 };
 
