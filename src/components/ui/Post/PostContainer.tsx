@@ -3,7 +3,7 @@
 import React, { useState } from "react";
 import PostForm from "./PostForm";
 import PostList from "./PostList";
-import { createPost, getPosts } from "@/lib/actions";
+import { createComment, createPost, getPosts } from "@/lib/actions";
 import { User } from "@supabase/supabase-js";
 
 interface Post {
@@ -39,6 +39,13 @@ const PostContainer: React.FC<PostContainerProps> = ({
     setOffset(newPosts.length);
   };
 
+  const handleNewComment = async (formData: FormData) => {
+    await createComment(formData);
+    const newPosts = await getPosts(10, 0);
+    setPosts(newPosts);
+    setOffset(newPosts.length);
+  };
+
   const fetchMorePosts = async () => {
     setLoading(true);
     const newPosts = await getPosts(10, offset);
@@ -50,7 +57,12 @@ const PostContainer: React.FC<PostContainerProps> = ({
   return (
     <>
       {user && <PostForm onSubmit={handleNewPost} />}
-      <PostList posts={posts} loading={loading} onLoadMore={fetchMorePosts} />
+      <PostList
+        posts={posts}
+        loading={loading}
+        onLoadMore={fetchMorePosts}
+        handleNewComment={handleNewComment}
+      />
     </>
   );
 };

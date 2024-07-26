@@ -17,7 +17,7 @@ export default function NavLinks({ user }: NavlinksProps) {
         </Link>
         <nav className="ml-6 space-x-2 lg:block">
           <Link href="/" className={s.link}>
-            CAWMENT
+            Cawments
           </Link>
         </nav>
       </div>

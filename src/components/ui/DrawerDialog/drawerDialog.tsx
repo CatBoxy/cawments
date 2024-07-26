@@ -40,9 +40,13 @@ interface DrawerDialogProps {
       avatar_url: string;
     } | null;
   };
+  handleNewComment: (formData: FormData) => void;
 }
 
-const DrawerDialog: React.FC<DrawerDialogProps> = ({ post }) => {
+const DrawerDialog: React.FC<DrawerDialogProps> = ({
+  post,
+  handleNewComment
+}) => {
   const [open, setOpen] = React.useState(false);
   const isDesktop = useMediaQuery("(min-width: 768px)");
 
@@ -61,7 +65,11 @@ const DrawerDialog: React.FC<DrawerDialogProps> = ({ post }) => {
             <DialogTitle>{post.user?.username} says</DialogTitle>
             <DialogDescription>{post.content}</DialogDescription>
           </DialogHeader>
-          <CommentForm postId={post.id} />
+          <CommentForm
+            postId={post.id}
+            handleNewComment={handleNewComment}
+            setOpen={setOpen}
+          />
         </DialogContent>
       </Dialog>
     );
@@ -81,7 +89,12 @@ const DrawerDialog: React.FC<DrawerDialogProps> = ({ post }) => {
           <DrawerTitle>{post.user?.username}</DrawerTitle>
           <DrawerDescription>{post.content}</DrawerDescription>
         </DrawerHeader>
-        <CommentForm className="px-4" postId={post.id} />
+        <CommentForm
+          className="px-4"
+          postId={post.id}
+          handleNewComment={handleNewComment}
+          setOpen={setOpen}
+        />
         <DrawerFooter className="pt-2">
           <DrawerClose asChild>
             <Button variant="outline">Cancel</Button>
@@ -96,9 +109,16 @@ export default DrawerDialog;
 
 interface CommentFormProps extends React.ComponentProps<"form"> {
   postId: string;
+  handleNewComment: (formData: FormData) => void;
+  setOpen: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
-function CommentForm({ className, postId }: CommentFormProps) {
+function CommentForm({
+  className,
+  postId,
+  handleNewComment,
+  setOpen
+}: CommentFormProps) {
   const [text, setText] = useState("");
   const [image, setImage] = useState<File | null>(null);
 
@@ -109,10 +129,12 @@ function CommentForm({ className, postId }: CommentFormProps) {
     if (image) {
       formData.append("image", image);
     }
-    await createComment(formData, postId);
+    formData.append("postId", postId);
+    await handleNewComment(formData);
     setText("");
     setImage(null);
     (e.target as HTMLFormElement).reset();
+    setOpen(false);
   };
 
   return (

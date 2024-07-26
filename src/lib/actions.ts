@@ -45,7 +45,7 @@ export async function createPost(formData: FormData) {
   }
 }
 
-export async function createComment(formData: FormData, parentPostId: string) {
+export async function createComment(formData: FormData) {
   const supabase = createClient();
   const {
     data: { user }
@@ -57,6 +57,7 @@ export async function createComment(formData: FormData, parentPostId: string) {
 
   const text = formData.get("text") as string;
   const image = formData.get("image") as File | null;
+  const parentPostId = formData.get("postId") as string | null;
 
   let imageUrl = "";
   if (image) {
@@ -131,6 +132,31 @@ export async function getPostById(id: string) {
   if (error) {
     console.error("Error fetching post:", error);
     return null;
+  }
+
+  return data;
+}
+
+export async function getComments(postId: string, limit = 10, offset = 0) {
+  const supabase = createClient();
+  const { data, error } = await supabase
+    .from("Post")
+    .select(
+      `
+      *,
+      user:User (
+        username,
+        avatar_url
+      )
+    `
+    )
+    .eq("parent_id", postId)
+    .order("created_at", { ascending: false })
+    .range(offset, offset + limit - 1);
+
+  if (error) {
+    console.error("Error fetching comments:", error);
+    return [];
   }
 
   return data;

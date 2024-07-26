@@ -19,9 +19,14 @@ interface PostProps {
     } | null;
   };
   redirect?: boolean;
+  handleNewComment: ((formData: FormData) => void) | null;
 }
 
-const Post: React.FC<PostProps> = ({ post, redirect = true }) => {
+const Post: React.FC<PostProps> = ({
+  post,
+  redirect = true,
+  handleNewComment
+}) => {
   const router = useRouter();
 
   const handleCardClick = () => {
@@ -51,9 +56,11 @@ const Post: React.FC<PostProps> = ({ post, redirect = true }) => {
           </div>
         </div>
       </div>
-      <div className="w-full md:w-auto" onClick={handleCommentClick}>
-        <DrawerDialog post={post} />
-      </div>
+      {handleNewComment && (
+        <div className="w-full md:w-auto" onClick={handleCommentClick}>
+          <DrawerDialog post={post} handleNewComment={handleNewComment} />
+        </div>
+      )}
     </Card>
   );
 };

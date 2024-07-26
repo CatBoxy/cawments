@@ -19,9 +19,15 @@ interface PostListProps {
   posts: Post[];
   loading: boolean;
   onLoadMore: () => void;
+  handleNewComment: (formData: FormData) => void;
 }
 
-const PostList: React.FC<PostListProps> = ({ posts, loading, onLoadMore }) => {
+const PostList: React.FC<PostListProps> = ({
+  posts,
+  loading,
+  onLoadMore,
+  handleNewComment
+}) => {
   const handleScroll = () => {
     if (
       window.innerHeight + document.documentElement.scrollTop !==
@@ -41,7 +47,7 @@ const PostList: React.FC<PostListProps> = ({ posts, loading, onLoadMore }) => {
     <div>
       {!posts.length && <p>No posts found</p>}
       {posts.map((post: Post) => (
-        <Post key={post.id} post={post} />
+        <Post key={post.id} post={post} handleNewComment={handleNewComment} />
       ))}
       {loading && <p>Loading...</p>}
     </div>
