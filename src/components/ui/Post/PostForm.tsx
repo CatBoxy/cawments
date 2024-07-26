@@ -1,9 +1,10 @@
-"use client";
-
-import { createPost } from "../lib/actions";
 import { useState } from "react";
 
-function PostForm() {
+interface PostFormProps {
+  onSubmit: (formData: FormData) => Promise<void>;
+}
+
+function PostForm({ onSubmit }: PostFormProps) {
   const [text, setText] = useState("");
   const [image, setImage] = useState<File | null>(null);
 
@@ -14,7 +15,7 @@ function PostForm() {
     if (image) {
       formData.append("image", image);
     }
-    await createPost(formData);
+    await onSubmit(formData);
     setText("");
     setImage(null);
     (e.target as HTMLFormElement).reset();

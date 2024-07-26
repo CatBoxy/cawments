@@ -1,8 +1,6 @@
-"use client";
-
 import React, { useEffect, useState } from "react";
-import { getPosts } from "../lib/actions";
-import Post from "./ui/Post/Post";
+import Post from "./Post";
+//usar dinamic import ???
 
 interface Post {
   id: string;
@@ -17,23 +15,13 @@ interface Post {
   } | null;
 }
 
-const PostList: React.FC = () => {
-  const [posts, setPosts] = useState<Post[]>([]);
-  const [offset, setOffset] = useState(0);
-  const [loading, setLoading] = useState(false);
+interface PostListProps {
+  posts: Post[];
+  loading: boolean;
+  onLoadMore: () => void;
+}
 
-  const fetchPosts = async () => {
-    setLoading(true);
-    const newPosts = await getPosts(10, offset);
-    setPosts((prevPosts) => [...prevPosts, ...newPosts]);
-    setOffset((prevOffset) => prevOffset + 10);
-    setLoading(false);
-  };
-
-  useEffect(() => {
-    fetchPosts();
-  }, []);
-
+const PostList: React.FC<PostListProps> = ({ posts, loading, onLoadMore }) => {
   const handleScroll = () => {
     if (
       window.innerHeight + document.documentElement.scrollTop !==
@@ -41,7 +29,7 @@ const PostList: React.FC = () => {
       loading
     )
       return;
-    fetchPosts();
+    onLoadMore();
   };
 
   useEffect(() => {

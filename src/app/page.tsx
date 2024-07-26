@@ -1,19 +1,20 @@
-import PostForm from "@/components/postForm";
-import PostList from "@/components/PostList";
+import PostContainer from "@/components/ui/Post/PostContainer";
+import { getPosts } from "@/lib/actions";
 import { createClient } from "@/lib/supabase/server";
 
 export default async function Home() {
+  const initialPosts = await getPosts(10, 0);
   const supabase = createClient();
 
   const {
     data: { user }
   } = await supabase.auth.getUser();
+
   return (
     <>
       <main>
         <h1>MAIN PAGE</h1>
-        {user && <PostForm />}
-        <PostList />
+        <PostContainer initialPosts={initialPosts} user={user} />
       </main>
     </>
   );
