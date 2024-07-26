@@ -26,7 +26,7 @@ export default function NavLinks({ user }: NavlinksProps) {
       <div className="flex justify-end space-x-8">
         {user ? (
           <button onClick={() => SignOut()} className={s.link}>
-            logOut
+            Sign out
           </button>
         ) : (
           <LogInButton />

@@ -22,10 +22,10 @@ import {
   DrawerTrigger
 } from "@/components/ui/drawer";
 import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
 import { Avatar, AvatarFallback, AvatarImage } from "../avatar";
 import { useState } from "react";
-import { createComment } from "@/lib/actions";
+import { User } from "@supabase/supabase-js";
+import LogInButton from "@/components/LogInButton";
 
 interface DrawerDialogProps {
   post: {
@@ -41,11 +41,13 @@ interface DrawerDialogProps {
     } | null;
   };
   handleNewComment: (formData: FormData) => void;
+  user: User | null;
 }
 
 const DrawerDialog: React.FC<DrawerDialogProps> = ({
   post,
-  handleNewComment
+  handleNewComment,
+  user
 }) => {
   const [open, setOpen] = React.useState(false);
   const isDesktop = useMediaQuery("(min-width: 768px)");
@@ -57,19 +59,27 @@ const DrawerDialog: React.FC<DrawerDialogProps> = ({
           <Button className="bg-purple-900 hover:bg-purple-950">Comment</Button>
         </DialogTrigger>
         <DialogContent className="sm:max-w-[425px]">
-          <DialogHeader>
-            <Avatar className="flex-shrink-0 h-12 w-12 rounded-full">
-              <AvatarImage src={post.user?.avatar_url} />
-              <AvatarFallback>CN</AvatarFallback>
-            </Avatar>
-            <DialogTitle>{post.user?.username} says</DialogTitle>
-            <DialogDescription>{post.content}</DialogDescription>
-          </DialogHeader>
-          <CommentForm
-            postId={post.id}
-            handleNewComment={handleNewComment}
-            setOpen={setOpen}
-          />
+          {user ? (
+            <div>
+              <DialogHeader>
+                <div className="flex flex-row items-center">
+                  <Avatar className="flex-shrink-0 h-12 w-12 rounded-full mr-4">
+                    <AvatarImage src={post.user?.avatar_url} />
+                    <AvatarFallback>CN</AvatarFallback>
+                  </Avatar>
+                  <DialogTitle>{post.user?.username} says</DialogTitle>
+                </div>
+                <DialogDescription>{post.content}</DialogDescription>
+              </DialogHeader>
+              <CommentForm
+                postId={post.id}
+                handleNewComment={handleNewComment}
+                setOpen={setOpen}
+              />
+            </div>
+          ) : (
+            <LogInButton />
+          )}
         </DialogContent>
       </Dialog>
     );
@@ -81,25 +91,33 @@ const DrawerDialog: React.FC<DrawerDialogProps> = ({
         <Button className="bg-purple-900 hover:bg-purple-950">Comment</Button>
       </DrawerTrigger>
       <DrawerContent>
-        <DrawerHeader className="text-left">
-          <Avatar className="flex-shrink-0 h-12 w-12 rounded-full">
-            <AvatarImage src={post.user?.avatar_url} />
-            <AvatarFallback>CN</AvatarFallback>
-          </Avatar>
-          <DrawerTitle>{post.user?.username}</DrawerTitle>
-          <DrawerDescription>{post.content}</DrawerDescription>
-        </DrawerHeader>
-        <CommentForm
-          className="px-4"
-          postId={post.id}
-          handleNewComment={handleNewComment}
-          setOpen={setOpen}
-        />
-        <DrawerFooter className="pt-2">
-          <DrawerClose asChild>
-            <Button variant="outline">Cancel</Button>
-          </DrawerClose>
-        </DrawerFooter>
+        {user ? (
+          <div>
+            <DrawerHeader className="text-left">
+              <div className="flex flex-row items-center">
+                <Avatar className="flex-shrink-0 h-12 w-12 rounded-full mr-4">
+                  <AvatarImage src={post.user?.avatar_url} />
+                  <AvatarFallback>CN</AvatarFallback>
+                </Avatar>
+                <DialogTitle>{post.user?.username} says</DialogTitle>
+              </div>
+              <DrawerDescription>{post.content}</DrawerDescription>
+            </DrawerHeader>
+            <CommentForm
+              className="px-4"
+              postId={post.id}
+              handleNewComment={handleNewComment}
+              setOpen={setOpen}
+            />
+            <DrawerFooter className="pt-2">
+              <DrawerClose asChild>
+                <Button variant="outline">Cancel</Button>
+              </DrawerClose>
+            </DrawerFooter>
+          </div>
+        ) : (
+          <LogInButton />
+        )}
       </DrawerContent>
     </Drawer>
   );
@@ -143,11 +161,10 @@ function CommentForm({
       onSubmit={handleSubmit}
     >
       <div className="grid gap-2">
-        {/* <Label htmlFor="comment">Comment</Label> */}
         <Input
           type="text"
           id="comment"
-          placeholder="Post your comment"
+          placeholder="Reply with your comment"
           value={text}
           onChange={(e) => setText(e.target.value)}
         />

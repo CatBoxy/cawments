@@ -22,11 +22,13 @@ interface Post {
 interface PostContainerProps {
   initialPosts: Post[];
   userData: { username: string; avatar_url: string } | null;
+  user: User | null;
 }
 
 const PostContainer: React.FC<PostContainerProps> = ({
   initialPosts,
-  userData
+  userData,
+  user
 }) => {
   const [posts, setPosts] = useState<Post[]>(initialPosts);
   const [offset, setOffset] = useState(initialPosts.length);
@@ -62,6 +64,7 @@ const PostContainer: React.FC<PostContainerProps> = ({
         loading={loading}
         onLoadMore={fetchMorePosts}
         handleNewComment={handleNewComment}
+        user={user}
       />
     </>
   );

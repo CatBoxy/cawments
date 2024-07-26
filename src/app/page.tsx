@@ -25,7 +25,11 @@ export default async function Home() {
             Crow-sourced Conversations.
           </h1>
         </div>
-        <PostContainer initialPosts={initialPosts} userData={userData} />
+        <PostContainer
+          initialPosts={initialPosts}
+          userData={userData}
+          user={user}
+        />
       </div>
     </main>
   );

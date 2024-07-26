@@ -4,6 +4,7 @@ import { Card } from "../card";
 import { Avatar, AvatarImage, AvatarFallback } from "../avatar";
 import { useRouter } from "next/navigation";
 import DrawerDialog from "../DrawerDialog/drawerDialog";
+import { User } from "@supabase/supabase-js";
 
 interface PostProps {
   post: {
@@ -20,12 +21,14 @@ interface PostProps {
   };
   redirect?: boolean;
   handleNewComment: ((formData: FormData) => void) | null;
+  user: User | null;
 }
 
 const Post: React.FC<PostProps> = ({
   post,
   redirect = true,
-  handleNewComment
+  handleNewComment,
+  user
 }) => {
   const router = useRouter();
 
@@ -62,7 +65,11 @@ const Post: React.FC<PostProps> = ({
       </div>
       {handleNewComment && (
         <div className="w-full md:w-auto" onClick={handleCommentClick}>
-          <DrawerDialog post={post} handleNewComment={handleNewComment} />
+          <DrawerDialog
+            post={post}
+            handleNewComment={handleNewComment}
+            user={user}
+          />
         </div>
       )}
     </Card>

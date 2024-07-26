@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import Post from "./Post";
+import { User } from "@supabase/supabase-js";
 //usar dinamic import ???
 
 interface Post {
@@ -20,13 +21,15 @@ interface PostListProps {
   loading: boolean;
   onLoadMore: () => void;
   handleNewComment: (formData: FormData) => void;
+  user: User | null;
 }
 
 const PostList: React.FC<PostListProps> = ({
   posts,
   loading,
   onLoadMore,
-  handleNewComment
+  handleNewComment,
+  user
 }) => {
   const handleScroll = () => {
     if (
@@ -47,7 +50,12 @@ const PostList: React.FC<PostListProps> = ({
     <div>
       {!posts.length && <p>No posts found</p>}
       {posts.map((post: Post) => (
-        <Post key={post.id} post={post} handleNewComment={handleNewComment} />
+        <Post
+          key={post.id}
+          post={post}
+          handleNewComment={handleNewComment}
+          user={user}
+        />
       ))}
       {loading && <p>Loading...</p>}
     </div>
