@@ -28,7 +28,7 @@ function PostForm({ onSubmit, userData }: PostFormProps) {
 
   return (
     <>
-      <form onSubmit={handleSubmit} className="p-4 border-t border-zinc-700">
+      <form onSubmit={handleSubmit} className="p-4 border-b border-zinc-700">
         <div className="flex flex-row items-center mb-4">
           <Avatar className="flex-shrink-0 h-12 w-12 rounded-full mr-4">
             <AvatarImage src={userData?.avatar_url} />

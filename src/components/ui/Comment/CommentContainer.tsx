@@ -23,12 +23,14 @@ interface CommentContainerProps {
   initialComments: Comment[];
   user: User | null;
   postId: string;
+  userData: { username: string; avatar_url: string } | null;
 }
 
 const CommentContainer: React.FC<CommentContainerProps> = ({
   initialComments,
   user,
-  postId
+  postId,
+  userData
 }) => {
   const [comments, setComments] = useState<Comment[]>(initialComments);
   const [offset, setOffset] = useState(initialComments.length);
@@ -52,12 +54,13 @@ const CommentContainer: React.FC<CommentContainerProps> = ({
 
   return (
     <>
-      {user && <PostForm onSubmit={handleNewComment} />}
+      {user && <PostForm onSubmit={handleNewComment} userData={userData} />}
       <PostList
         posts={comments}
         loading={loading}
         onLoadMore={fetchMoreComments}
         handleNewComment={handleNewComment}
+        user={user}
       />
     </>
   );

@@ -20,7 +20,7 @@ interface PostProps {
     } | null;
   };
   redirect?: boolean;
-  handleNewComment: ((formData: FormData) => void) | null;
+  handleNewComment?: ((formData: FormData) => void) | null;
   user: User | null;
 }
 
@@ -45,7 +45,7 @@ const Post: React.FC<PostProps> = ({
   return (
     <Card
       onClick={handleCardClick}
-      className="border-zinc-700 bg-zinc-950 border-t flex flex-col md:flex-row items-start gap-4 p-4 shadow-sm hover:shadow-md transition-shadow cursor-pointer"
+      className="border-zinc-700 bg-zinc-950  border-b flex flex-col md:flex-row items-start gap-4 p-4 shadow-sm hover:shadow-md transition-shadow cursor-pointer"
     >
       <Avatar className="flex-shrink-0 h-12 w-12 rounded-full">
         <AvatarImage src={post.user?.avatar_url} />

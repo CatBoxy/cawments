@@ -48,7 +48,13 @@ const PostList: React.FC<PostListProps> = ({
 
   return (
     <div>
-      {!posts.length && <p>No posts found</p>}
+      {!posts.length && (
+        <div className="border-b border-zinc-700 p-4 flex justify-center">
+          <p className="text-zinc-200">
+            Nothing to show here yet. Add some content or come back later!
+          </p>
+        </div>
+      )}
       {posts.map((post: Post) => (
         <Post
           key={post.id}

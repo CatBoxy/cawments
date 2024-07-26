@@ -20,7 +20,7 @@ export default async function Home() {
   return (
     <main className="flex flex-col items-center">
       <div className="w-[600px] flex flex-col border-r border-l border-zinc-700 bg-zinc-950">
-        <div className="p-4 border-zinc-700">
+        <div className="p-4 border-zinc-700 border-b">
           <h1 className="flex justify-center text-zinc-200">
             Crow-sourced Conversations.
           </h1>
