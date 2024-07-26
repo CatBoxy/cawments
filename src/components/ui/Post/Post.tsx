@@ -42,7 +42,7 @@ const Post: React.FC<PostProps> = ({
   return (
     <Card
       onClick={handleCardClick}
-      className="flex flex-col md:flex-row items-start gap-4 p-4 rounded-lg shadow-sm hover:shadow-md transition-shadow cursor-pointer"
+      className="border-zinc-700 bg-zinc-950 border-t flex flex-col md:flex-row items-start gap-4 p-4 shadow-sm hover:shadow-md transition-shadow cursor-pointer"
     >
       <Avatar className="flex-shrink-0 h-12 w-12 rounded-full">
         <AvatarImage src={post.user?.avatar_url} />
@@ -51,8 +51,12 @@ const Post: React.FC<PostProps> = ({
       <div className="flex-1 space-y-2">
         <div className="flex items-center justify-between">
           <div className="space-y-0.5">
-            <h4 className="font-semibold">{post.user?.username}</h4>
-            <p className="text-sm text-muted-foreground">{post.content}</p>
+            <h4 className="font-semibold text-zinc-200">
+              {post.user?.username}
+            </h4>
+            <p className="text-sm text-muted-foreground text-zinc-200">
+              {post.content}
+            </p>
           </div>
         </div>
       </div>

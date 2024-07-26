@@ -1,10 +1,15 @@
 import { useState } from "react";
+import { Input } from "../input";
+import { Label } from "../label";
+import { Button } from "../button";
+import { Avatar, AvatarFallback, AvatarImage } from "../avatar";
 
 interface PostFormProps {
   onSubmit: (formData: FormData) => Promise<void>;
+  userData: { username: string; avatar_url: string } | null;
 }
 
-function PostForm({ onSubmit }: PostFormProps) {
+function PostForm({ onSubmit, userData }: PostFormProps) {
   const [text, setText] = useState("");
   const [image, setImage] = useState<File | null>(null);
 
@@ -22,30 +27,40 @@ function PostForm({ onSubmit }: PostFormProps) {
   };
 
   return (
-    <div>
-      <h1>Create a New Post</h1>
-      <form onSubmit={handleSubmit}>
-        <div>
-          <label htmlFor="text">Text:</label>
-          <input
+    <>
+      <form onSubmit={handleSubmit} className="p-4 border-t border-zinc-700">
+        <div className="flex flex-row items-center mb-4">
+          <Avatar className="flex-shrink-0 h-12 w-12 rounded-full mr-4">
+            <AvatarImage src={userData?.avatar_url} />
+            <AvatarFallback>CN</AvatarFallback>
+          </Avatar>
+          <Input
+            className="bg-zinc-900 border-zinc-700 border"
             type="text"
             id="text"
             value={text}
             onChange={(e) => setText(e.target.value)}
+            placeholder="Create a new Cawment!"
           />
         </div>
-        <div>
-          <label htmlFor="image">Image:</label>
-          <input
+        <div className="mb-4">
+          <Label htmlFor="text" className="text-zinc-200">
+            Upload an image:
+          </Label>
+          <Input
             type="file"
             id="image"
             accept="image/*"
             onChange={(e) => setImage(e.target.files?.[0] || null)}
           />
         </div>
-        <button type="submit">Submit</button>
+        <div className="flex justify-end">
+          <Button type="submit" className="bg-purple-900 hover:bg-purple-950">
+            Post
+          </Button>
+        </div>
       </form>
-    </div>
+    </>
   );
 }
 

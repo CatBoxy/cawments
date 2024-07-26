@@ -54,7 +54,7 @@ const DrawerDialog: React.FC<DrawerDialogProps> = ({
     return (
       <Dialog open={open} onOpenChange={setOpen}>
         <DialogTrigger asChild>
-          <Button variant="outline">Comment</Button>
+          <Button className="bg-purple-900 hover:bg-purple-950">Comment</Button>
         </DialogTrigger>
         <DialogContent className="sm:max-w-[425px]">
           <DialogHeader>
@@ -78,7 +78,7 @@ const DrawerDialog: React.FC<DrawerDialogProps> = ({
   return (
     <Drawer open={open} onOpenChange={setOpen}>
       <DrawerTrigger asChild>
-        <Button variant="outline">Comment</Button>
+        <Button className="bg-purple-900 hover:bg-purple-950">Comment</Button>
       </DrawerTrigger>
       <DrawerContent>
         <DrawerHeader className="text-left">

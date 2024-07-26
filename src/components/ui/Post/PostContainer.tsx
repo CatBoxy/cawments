@@ -21,12 +21,12 @@ interface Post {
 
 interface PostContainerProps {
   initialPosts: Post[];
-  user: User | null;
+  userData: { username: string; avatar_url: string } | null;
 }
 
 const PostContainer: React.FC<PostContainerProps> = ({
   initialPosts,
-  user
+  userData
 }) => {
   const [posts, setPosts] = useState<Post[]>(initialPosts);
   const [offset, setOffset] = useState(initialPosts.length);
@@ -56,7 +56,7 @@ const PostContainer: React.FC<PostContainerProps> = ({
 
   return (
     <>
-      {user && <PostForm onSubmit={handleNewPost} />}
+      {userData && <PostForm onSubmit={handleNewPost} userData={userData} />}
       <PostList
         posts={posts}
         loading={loading}

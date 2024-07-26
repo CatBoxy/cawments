@@ -161,3 +161,19 @@ export async function getComments(postId: string, limit = 10, offset = 0) {
 
   return data;
 }
+
+export async function getUserData(userId: string) {
+  const supabase = createClient();
+  const { data, error } = await supabase
+    .from("User")
+    .select("username, avatar_url")
+    .eq("id", userId)
+    .single();
+
+  if (error) {
+    console.error("Error fetching user data:", error);
+    return null;
+  }
+
+  return data;
+}

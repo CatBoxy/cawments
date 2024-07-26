@@ -17,7 +17,7 @@ export default async function PostPage({ params }: { params: { id: string } }) {
   }
 
   return (
-    <main>
+    <main className="flex flex-col items-center">
       <Post post={post} redirect={false} handleNewComment={null} />
       <CommentContainer
         initialComments={initialComments}

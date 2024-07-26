@@ -3,6 +3,7 @@
 import Link from "next/link";
 import s from "./NavBar.module.css";
 import { SignOut } from "@/lib/auth-helpers/server";
+import Image from "next/image";
 
 interface NavlinksProps {
   user?: any;
@@ -10,10 +11,10 @@ interface NavlinksProps {
 
 export default function NavLinks({ user }: NavlinksProps) {
   return (
-    <div className="relative flex flex-row justify-between py-4 align-center md:py-6">
+    <div className="relative flex flex-row justify-between pt-4 align-center">
       <div className="flex items-center flex-1">
         <Link href="/" className={s.logo} aria-label="Logo">
-          LOGO
+          <Image src="/logo.svg" alt="Logo" width={64} height={64} />
         </Link>
         <nav className="ml-6 space-x-2 lg:block">
           <Link href="/" className={s.link}>
