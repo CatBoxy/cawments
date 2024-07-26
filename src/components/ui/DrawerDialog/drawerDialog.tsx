@@ -23,8 +23,26 @@ import {
 } from "@/components/ui/drawer";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { Avatar, AvatarFallback, AvatarImage } from "../avatar";
+import { useState } from "react";
+import { createComment } from "@/lib/actions";
 
-export function DrawerDialog() {
+interface DrawerDialogProps {
+  post: {
+    id: string;
+    user_id: string;
+    content?: string | null;
+    image_url?: string | null;
+    created_at: string;
+    parent_id?: string | null;
+    user: {
+      username: string;
+      avatar_url: string;
+    } | null;
+  };
+}
+
+const DrawerDialog: React.FC<DrawerDialogProps> = ({ post }) => {
   const [open, setOpen] = React.useState(false);
   const isDesktop = useMediaQuery("(min-width: 768px)");
 
@@ -32,16 +50,18 @@ export function DrawerDialog() {
     return (
       <Dialog open={open} onOpenChange={setOpen}>
         <DialogTrigger asChild>
-          <Button variant="outline">Edit Profile</Button>
+          <Button variant="outline">Comment</Button>
         </DialogTrigger>
         <DialogContent className="sm:max-w-[425px]">
           <DialogHeader>
-            <DialogTitle>Edit profile</DialogTitle>
-            <DialogDescription>
-              Make changes to your profile here. Click save when you're done.
-            </DialogDescription>
+            <Avatar className="flex-shrink-0 h-12 w-12 rounded-full">
+              <AvatarImage src={post.user?.avatar_url} />
+              <AvatarFallback>CN</AvatarFallback>
+            </Avatar>
+            <DialogTitle>{post.user?.username} says</DialogTitle>
+            <DialogDescription>{post.content}</DialogDescription>
           </DialogHeader>
-          <ProfileForm />
+          <CommentForm postId={post.id} />
         </DialogContent>
       </Dialog>
     );
@@ -50,16 +70,18 @@ export function DrawerDialog() {
   return (
     <Drawer open={open} onOpenChange={setOpen}>
       <DrawerTrigger asChild>
-        <Button variant="outline">Edit Profile</Button>
+        <Button variant="outline">Comment</Button>
       </DrawerTrigger>
       <DrawerContent>
         <DrawerHeader className="text-left">
-          <DrawerTitle>Edit profile</DrawerTitle>
-          <DrawerDescription>
-            Make changes to your profile here. Click save when you're done.
-          </DrawerDescription>
+          <Avatar className="flex-shrink-0 h-12 w-12 rounded-full">
+            <AvatarImage src={post.user?.avatar_url} />
+            <AvatarFallback>CN</AvatarFallback>
+          </Avatar>
+          <DrawerTitle>{post.user?.username}</DrawerTitle>
+          <DrawerDescription>{post.content}</DrawerDescription>
         </DrawerHeader>
-        <ProfileForm className="px-4" />
+        <CommentForm className="px-4" postId={post.id} />
         <DrawerFooter className="pt-2">
           <DrawerClose asChild>
             <Button variant="outline">Cancel</Button>
@@ -68,20 +90,53 @@ export function DrawerDialog() {
       </DrawerContent>
     </Drawer>
   );
+};
+
+export default DrawerDialog;
+
+interface CommentFormProps extends React.ComponentProps<"form"> {
+  postId: string;
 }
 
-function ProfileForm({ className }: React.ComponentProps<"form">) {
+function CommentForm({ className, postId }: CommentFormProps) {
+  const [text, setText] = useState("");
+  const [image, setImage] = useState<File | null>(null);
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    const formData = new FormData();
+    formData.append("text", text);
+    if (image) {
+      formData.append("image", image);
+    }
+    await createComment(formData, postId);
+    setText("");
+    setImage(null);
+    (e.target as HTMLFormElement).reset();
+  };
+
   return (
-    <form className={cn("grid items-start gap-4", className)}>
+    <form
+      className={cn("grid items-start gap-4", className)}
+      onSubmit={handleSubmit}
+    >
       <div className="grid gap-2">
-        <Label htmlFor="email">Email</Label>
-        <Input type="email" id="email" defaultValue="shadcn@example.com" />
+        {/* <Label htmlFor="comment">Comment</Label> */}
+        <Input
+          type="text"
+          id="comment"
+          placeholder="Post your comment"
+          value={text}
+          onChange={(e) => setText(e.target.value)}
+        />
+        <Input
+          type="file"
+          id="image"
+          accept="image/*"
+          onChange={(e) => setImage(e.target.files?.[0] || null)}
+        />
       </div>
-      <div className="grid gap-2">
-        <Label htmlFor="username">Username</Label>
-        <Input id="username" defaultValue="@shadcn" />
-      </div>
-      <Button type="submit">Save changes</Button>
+      <Button type="submit">Comment</Button>
     </form>
   );
 }

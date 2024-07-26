@@ -78,7 +78,7 @@ export async function createComment(formData: FormData, parentPostId: string) {
     user_id: user.id,
     content: text,
     image_url: imageUrl,
-    parent_post_id: parentPostId,
+    parent_id: parentPostId,
     created_at: new Date().toISOString()
   });
 
@@ -116,7 +116,15 @@ export async function getPostById(id: string) {
 
   const { data, error } = await supabase
     .from("Post")
-    .select("*")
+    .select(
+      `
+    *,
+    user:User (
+      username,
+      avatar_url
+    )
+  `
+    )
     .eq("id", id)
     .single();
 

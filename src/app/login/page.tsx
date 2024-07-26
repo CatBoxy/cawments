@@ -14,9 +14,9 @@ export default async function LoginPage() {
   }
 
   return (
-    <div>
+    <main>
       <h1>LOG IN PAGE</h1>
       <LogInButton />
-    </div>
+    </main>
   );
 }

@@ -1,7 +1,9 @@
+"use client";
+
 import { Card } from "../card";
 import { Avatar, AvatarImage, AvatarFallback } from "../avatar";
-import { Button } from "../button";
 import { useRouter } from "next/navigation";
+import DrawerDialog from "../DrawerDialog/drawerDialog";
 
 interface PostProps {
   post: {
@@ -16,13 +18,16 @@ interface PostProps {
       avatar_url: string;
     } | null;
   };
+  redirect?: boolean;
 }
 
-const Post: React.FC<PostProps> = ({ post }) => {
+const Post: React.FC<PostProps> = ({ post, redirect = true }) => {
   const router = useRouter();
 
   const handleCardClick = () => {
-    router.push(`/posts/${post.id}`);
+    if (redirect) {
+      router.push(`/posts/${post.id}`);
+    }
   };
 
   const handleCommentClick = (e: React.MouseEvent) => {
@@ -46,14 +51,8 @@ const Post: React.FC<PostProps> = ({ post }) => {
           </div>
         </div>
       </div>
-      <div className="w-full md:w-auto">
-        <Button
-          variant="outline"
-          className="w-full md:w-auto"
-          onClick={handleCommentClick}
-        >
-          Comment
-        </Button>
+      <div className="w-full md:w-auto" onClick={handleCommentClick}>
+        <DrawerDialog post={post} />
       </div>
     </Card>
   );
