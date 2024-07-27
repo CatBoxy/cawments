@@ -45,26 +45,40 @@ const Post: React.FC<PostProps> = ({
   return (
     <Card
       onClick={handleCardClick}
-      className="border-zinc-700 bg-zinc-950  border-b flex flex-col md:flex-row items-start gap-4 p-4 shadow-sm hover:shadow-md transition-shadow cursor-pointer"
+      className="border-zinc-700 bg-zinc-950  border-b flex flex-col items-start gap-4 p-4 shadow-sm hover:bg-zinc-900 transition-shadow cursor-pointer"
     >
-      <Avatar className="flex-shrink-0 h-12 w-12 rounded-full">
-        <AvatarImage src={post.user?.avatar_url} />
-        <AvatarFallback>CN</AvatarFallback>
-      </Avatar>
-      <div className="flex-1 space-y-2">
-        <div className="flex items-center justify-between">
-          <div className="space-y-0.5 max-w-[390px]">
-            <h4 className="font-semibold text-zinc-200">
-              {post.user?.username}
-            </h4>
-            <p className="text-sm text-muted-foreground text-zinc-200 break-words overflow-wrap-anywhere">
-              {post.content}
-            </p>
+      <div className="flex w-full">
+        <Avatar className="flex-shrink-0 h-12 w-12 rounded-full mr-4">
+          <AvatarImage src={post.user?.avatar_url} />
+          <AvatarFallback>CN</AvatarFallback>
+        </Avatar>
+        <div className="flex-1 space-y-2">
+          <div className="flex items-center justify-between">
+            <div>
+              <h4 className="font-semibold text-zinc-200">
+                {post.user?.username}
+              </h4>
+              <p className="text-sm text-muted-foreground text-zinc-200 break-words overflow-wrap-anywhere max-w-[500px] mb-4">
+                {post.content}
+              </p>
+              {post.image_url && (
+                <div className="mt-2 overflow-hidden rounded-lg">
+                  <img
+                    src={post.image_url}
+                    alt="Post image"
+                    className="w-full h-auto object-cover"
+                  />
+                </div>
+              )}
+            </div>
           </div>
         </div>
       </div>
       {handleNewComment && (
-        <div className="w-full md:w-auto" onClick={handleCommentClick}>
+        <div
+          className="w-full flex flex-row justify-end"
+          onClick={handleCommentClick}
+        >
           <DrawerDialog
             post={post}
             handleNewComment={handleNewComment}
