@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useCallback, useState } from "react";
 import { Input } from "../input";
 import { Label } from "../label";
 import { Button } from "../button";
@@ -13,8 +13,14 @@ function PostForm({ onSubmit, userData }: PostFormProps) {
   const [text, setText] = useState("");
   const [image, setImage] = useState<File | null>(null);
 
+  const isFormValid = useCallback(() => {
+    return text.trim() !== "" || image !== null;
+  }, [text, image]);
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    if (!isFormValid()) return;
+
     const formData = new FormData();
     formData.append("text", text);
     if (image) {
@@ -35,7 +41,7 @@ function PostForm({ onSubmit, userData }: PostFormProps) {
             <AvatarFallback>CN</AvatarFallback>
           </Avatar>
           <Input
-            className="bg-zinc-900 border-zinc-700 border"
+            className="bg-zinc-900 border-zinc-700 border text-zinc-200"
             type="text"
             id="text"
             value={text}
@@ -55,7 +61,11 @@ function PostForm({ onSubmit, userData }: PostFormProps) {
           />
         </div>
         <div className="flex justify-end">
-          <Button type="submit" className="bg-purple-900 hover:bg-purple-950">
+          <Button
+            type="submit"
+            className="bg-purple-900 hover:bg-purple-950"
+            disabled={!isFormValid()}
+          >
             Post
           </Button>
         </div>

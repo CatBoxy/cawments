@@ -23,7 +23,7 @@ import {
 } from "@/components/ui/drawer";
 import { Input } from "@/components/ui/input";
 import { Avatar, AvatarFallback, AvatarImage } from "../avatar";
-import { useState } from "react";
+import { useCallback, useState } from "react";
 import { User } from "@supabase/supabase-js";
 import LogInButton from "@/components/LogInButton";
 
@@ -140,8 +140,14 @@ function CommentForm({
   const [text, setText] = useState("");
   const [image, setImage] = useState<File | null>(null);
 
+  const isFormValid = useCallback(() => {
+    return text.trim() !== "" || image !== null;
+  }, [text, image]);
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    if (!isFormValid()) return;
+
     const formData = new FormData();
     formData.append("text", text);
     if (image) {
@@ -175,7 +181,9 @@ function CommentForm({
           onChange={(e) => setImage(e.target.files?.[0] || null)}
         />
       </div>
-      <Button type="submit">Comment</Button>
+      <Button type="submit" disabled={!isFormValid()}>
+        Comment
+      </Button>
     </form>
   );
 }
