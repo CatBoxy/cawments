@@ -32,6 +32,13 @@ function PostForm({ onSubmit, userData }: PostFormProps) {
     (e.target as HTMLFormElement).reset();
   };
 
+  const handleTextChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const newText = e.target.value;
+    if (newText.length <= 300) {
+      setText(newText);
+    }
+  };
+
   return (
     <>
       <form onSubmit={handleSubmit} className="p-4 border-b border-zinc-700">
@@ -45,9 +52,10 @@ function PostForm({ onSubmit, userData }: PostFormProps) {
             type="text"
             id="text"
             value={text}
-            onChange={(e) => setText(e.target.value)}
+            onChange={handleTextChange}
             placeholder="Create a new Cawment!"
           />
+          <p className="text-sm text-zinc-400 mt-1 ml-4">{text.length}/300</p>
         </div>
         <div className="mb-4">
           <Label htmlFor="text" className="text-zinc-200">

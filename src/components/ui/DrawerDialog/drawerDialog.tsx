@@ -161,6 +161,13 @@ function CommentForm({
     setOpen(false);
   };
 
+  const handleTextChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const newText = e.target.value;
+    if (newText.length <= 300) {
+      setText(newText);
+    }
+  };
+
   return (
     <form
       className={cn("grid items-start gap-4", className)}
@@ -172,8 +179,9 @@ function CommentForm({
           id="comment"
           placeholder="Reply with your comment"
           value={text}
-          onChange={(e) => setText(e.target.value)}
+          onChange={handleTextChange}
         />
+        <p className="text-sm text-zinc-400 mt-1 ml-4">{text.length}/300</p>
         <Input
           type="file"
           id="image"
