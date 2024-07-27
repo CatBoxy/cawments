@@ -3,6 +3,7 @@ import { Input } from "../input";
 import { Label } from "../label";
 import { Button } from "../button";
 import { Avatar, AvatarFallback, AvatarImage } from "../avatar";
+import { MessageCircle } from "lucide-react";
 
 interface PostFormProps {
   onSubmit: (formData: FormData) => Promise<void>;
@@ -74,7 +75,10 @@ function PostForm({ onSubmit, userData }: PostFormProps) {
             className="bg-purple-900 hover:bg-purple-950"
             disabled={!isFormValid()}
           >
-            Post
+            <span className="mr-2">
+              <MessageCircle className="h-5 w-5" />
+            </span>
+            <span>Post</span>
           </Button>
         </div>
       </form>

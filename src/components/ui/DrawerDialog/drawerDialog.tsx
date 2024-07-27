@@ -26,6 +26,7 @@ import { Avatar, AvatarFallback, AvatarImage } from "../avatar";
 import { useCallback, useState } from "react";
 import { User } from "@supabase/supabase-js";
 import LogInButton from "@/components/LogInButton";
+import { MessageCircle } from "lucide-react";
 
 interface DrawerDialogProps {
   post: {
@@ -56,7 +57,12 @@ const DrawerDialog: React.FC<DrawerDialogProps> = ({
     return (
       <Dialog open={open} onOpenChange={setOpen}>
         <DialogTrigger asChild>
-          <Button className="bg-purple-900 hover:bg-purple-950">Comment</Button>
+          <Button className="bg-purple-900 hover:bg-purple-950">
+            <span className="mr-2">
+              <MessageCircle className="h-5 w-5" />
+            </span>
+            <span>Comment</span>
+          </Button>
         </DialogTrigger>
         <DialogContent className="sm:max-w-[425px]">
           {user ? (
@@ -88,7 +94,12 @@ const DrawerDialog: React.FC<DrawerDialogProps> = ({
   return (
     <Drawer open={open} onOpenChange={setOpen}>
       <DrawerTrigger asChild>
-        <Button className="bg-purple-900 hover:bg-purple-950">Comment</Button>
+        <Button className="bg-purple-900 hover:bg-purple-950">
+          <span className="mr-2">
+            <MessageCircle className="h-5 w-5" />
+          </span>
+          <span>Comment</span>
+        </Button>
       </DrawerTrigger>
       <DrawerContent>
         {user ? (
