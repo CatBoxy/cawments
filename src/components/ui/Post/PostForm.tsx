@@ -8,9 +8,10 @@ import { MessageCircle } from "lucide-react";
 interface PostFormProps {
   onSubmit: (formData: FormData) => Promise<void>;
   userData: { username: string; avatar_url: string } | null;
+  isComment?: boolean;
 }
 
-function PostForm({ onSubmit, userData }: PostFormProps) {
+function PostForm({ onSubmit, userData, isComment }: PostFormProps) {
   const [text, setText] = useState("");
   const [image, setImage] = useState<File | null>(null);
 
@@ -59,10 +60,11 @@ function PostForm({ onSubmit, userData }: PostFormProps) {
           <p className="text-sm text-zinc-400 mt-1 ml-4">{text.length}/300</p>
         </div>
         <div className="mb-4">
-          <Label htmlFor="text" className="text-zinc-200">
+          <Label htmlFor="image" className="text-zinc-200">
             Upload an image:
           </Label>
           <Input
+            className="bg-zinc-900 border-zinc-700 border text-zinc-200 cursor-pointer"
             type="file"
             id="image"
             accept="image/*"
@@ -78,7 +80,7 @@ function PostForm({ onSubmit, userData }: PostFormProps) {
             <span className="mr-2">
               <MessageCircle className="h-5 w-5" />
             </span>
-            <span>Post</span>
+            <span>{isComment ? "Comment" : "Post"}</span>
           </Button>
         </div>
       </form>

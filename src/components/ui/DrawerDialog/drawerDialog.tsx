@@ -27,6 +27,7 @@ import { useCallback, useState } from "react";
 import { User } from "@supabase/supabase-js";
 import LogInButton from "@/components/LogInButton";
 import { MessageCircle } from "lucide-react";
+import { Label } from "../label";
 
 interface DrawerDialogProps {
   post: {
@@ -64,7 +65,7 @@ const DrawerDialog: React.FC<DrawerDialogProps> = ({
             <span>Comment</span>
           </Button>
         </DialogTrigger>
-        <DialogContent className="sm:max-w-[425px]">
+        <DialogContent className="sm:max-w-[425px] bg-zinc-950 border-zinc-600">
           {user ? (
             <div>
               <DialogHeader>
@@ -73,9 +74,22 @@ const DrawerDialog: React.FC<DrawerDialogProps> = ({
                     <AvatarImage src={post.user?.avatar_url} />
                     <AvatarFallback>CN</AvatarFallback>
                   </Avatar>
-                  <DialogTitle>{post.user?.username} says</DialogTitle>
+                  <DialogTitle className="font-semibold text-zinc-200">
+                    {post.user?.username}
+                  </DialogTitle>
                 </div>
-                <DialogDescription>{post.content}</DialogDescription>
+                <DialogDescription className="text-sm text-muted-foreground text-zinc-200 break-words overflow-wrap-anywhere py-4">
+                  {post.content}
+                  {post.image_url && (
+                    <div className="mt-2 overflow-hidden rounded-lg">
+                      <img
+                        src={post.image_url}
+                        alt="Post image"
+                        className="w-full h-auto object-cover"
+                      />
+                    </div>
+                  )}
+                </DialogDescription>
               </DialogHeader>
               <CommentForm
                 postId={post.id}
@@ -185,22 +199,38 @@ function CommentForm({
       onSubmit={handleSubmit}
     >
       <div className="grid gap-2">
+        <div className="flex">
+          <Input
+            type="text"
+            id="comment"
+            placeholder="Reply with your comment"
+            value={text}
+            onChange={handleTextChange}
+            className="bg-zinc-900 border-zinc-700 border text-zinc-200"
+          />
+          <p className="text-sm text-zinc-400 ml-4 flex items-center">
+            {text.length}/300
+          </p>
+        </div>
+        <Label htmlFor="image" className="text-zinc-200">
+          Upload an image:
+        </Label>
         <Input
-          type="text"
-          id="comment"
-          placeholder="Reply with your comment"
-          value={text}
-          onChange={handleTextChange}
-        />
-        <p className="text-sm text-zinc-400 mt-1 ml-4">{text.length}/300</p>
-        <Input
+          className="bg-zinc-900 border-zinc-700 border text-zinc-200 cursor-pointer"
           type="file"
           id="image"
           accept="image/*"
           onChange={(e) => setImage(e.target.files?.[0] || null)}
         />
       </div>
-      <Button type="submit" disabled={!isFormValid()}>
+      <Button
+        type="submit"
+        className="bg-purple-900 hover:bg-purple-950"
+        disabled={!isFormValid()}
+      >
+        <span className="mr-2">
+          <MessageCircle className="h-5 w-5" />
+        </span>
         Comment
       </Button>
     </form>

@@ -54,7 +54,9 @@ const CommentContainer: React.FC<CommentContainerProps> = ({
 
   return (
     <>
-      {user && <PostForm onSubmit={handleNewComment} userData={userData} />}
+      {user && (
+        <PostForm onSubmit={handleNewComment} userData={userData} isComment />
+      )}
       <PostList
         posts={comments}
         loading={loading}

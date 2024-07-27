@@ -3,6 +3,8 @@ import CommentContainer from "@/components/ui/Comment/CommentContainer";
 import { getPostById, getComments, getUserData } from "@/lib/actions";
 import { createClient } from "@/lib/supabase/server";
 
+export const revalidate = 0;
+
 export default async function PostPage({ params }: { params: { id: string } }) {
   const post = await getPostById(params.id);
   const initialComments = await getComments(params.id, 10, 0);

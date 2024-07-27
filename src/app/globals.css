@@ -67,3 +67,7 @@
     @apply bg-background text-foreground;
   }
 }
+
+input[type="file"]::file-selector-button {
+  color: #e4e4e7;
+}
