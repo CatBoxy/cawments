@@ -53,11 +53,11 @@ const Post: React.FC<PostProps> = ({
       </Avatar>
       <div className="flex-1 space-y-2">
         <div className="flex items-center justify-between">
-          <div className="space-y-0.5">
+          <div className="space-y-0.5 max-w-[390px]">
             <h4 className="font-semibold text-zinc-200">
               {post.user?.username}
             </h4>
-            <p className="text-sm text-muted-foreground text-zinc-200">
+            <p className="text-sm text-muted-foreground text-zinc-200 break-words overflow-wrap-anywhere">
               {post.content}
             </p>
           </div>
