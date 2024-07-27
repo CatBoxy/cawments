@@ -58,7 +58,7 @@ const Post: React.FC<PostProps> = ({
               <h4 className="font-semibold text-zinc-200">
                 {post.user?.username}
               </h4>
-              <p className="text-sm text-muted-foreground text-zinc-200 break-words overflow-wrap-anywhere max-w-[500px] mb-4">
+              <p className="text-sm text-muted-foreground text-zinc-200 break-words overflow-wrap-anywhere max-w-[275px] sm:max-w-[500px] mb-4">
                 {post.content}
               </p>
               {post.image_url && (

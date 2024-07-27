@@ -3,7 +3,6 @@
 import Link from "next/link";
 import s from "./NavBar.module.css";
 import { SignOut } from "@/lib/auth-helpers/server";
-import Image from "next/image";
 import LogInButton from "@/components/LogInButton";
 import { usePathname } from "next/navigation";
 
@@ -15,12 +14,12 @@ export default function NavLinks({ user }: NavlinksProps) {
   const pathname = usePathname();
 
   return (
-    <div className="relative flex flex-row justify-between pt-4 align-center">
+    <div className="relative flex flex-row justify-between align-center">
       <div className="flex items-center flex-1">
         <Link href="/" className={s.logo} aria-label="Logo">
-          <Image src="/logo.svg" alt="Logo" width={64} height={64} />
+          <img src="/logo.svg" alt="Logo" className="h-8 w-8 sm:h-16 sm:w-16" />
         </Link>
-        <nav className="ml-6 space-x-2 lg:block">
+        <nav className="ml-6 space-x-2 lg:block hidden sm:block">
           <Link href="/" className={s.link}>
             Cawments
           </Link>

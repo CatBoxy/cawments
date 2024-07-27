@@ -25,7 +25,7 @@ export default async function PostPage({ params }: { params: { id: string } }) {
 
   return (
     <main className="flex flex-col items-center">
-      <div className="w-[600px] flex flex-col border-r border-l border-zinc-700 bg-zinc-950">
+      <div className="sm:w-[600px] flex flex-col border-r border-l border-zinc-700 bg-zinc-950">
         <Post post={post} redirect={false} user={user} />
         <CommentContainer
           initialComments={initialComments}

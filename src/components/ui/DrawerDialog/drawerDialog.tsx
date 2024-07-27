@@ -78,7 +78,7 @@ const DrawerDialog: React.FC<DrawerDialogProps> = ({
                     {post.user?.username}
                   </DialogTitle>
                 </div>
-                <DialogDescription className="text-sm text-muted-foreground text-zinc-200 break-words overflow-wrap-anywhere py-4">
+                <DialogDescription className="text-sm text-muted-foreground text-zinc-200 break-words overflow-wrap-anywhere py-4 sm:max-w-[370px]">
                   {post.content}
                   {post.image_url && (
                     <div className="mt-2 overflow-hidden rounded-lg">
@@ -115,7 +115,7 @@ const DrawerDialog: React.FC<DrawerDialogProps> = ({
           <span>Comment</span>
         </Button>
       </DrawerTrigger>
-      <DrawerContent>
+      <DrawerContent className="bg-zinc-950 border-zinc-600">
         {user ? (
           <div>
             <DrawerHeader className="text-left">
@@ -124,9 +124,22 @@ const DrawerDialog: React.FC<DrawerDialogProps> = ({
                   <AvatarImage src={post.user?.avatar_url} />
                   <AvatarFallback>CN</AvatarFallback>
                 </Avatar>
-                <DialogTitle>{post.user?.username} says</DialogTitle>
+                <DrawerTitle className="font-semibold text-zinc-200">
+                  {post.user?.username}
+                </DrawerTitle>
               </div>
-              <DrawerDescription>{post.content}</DrawerDescription>
+              <DrawerDescription className="text-sm text-muted-foreground text-zinc-200 break-words overflow-wrap-anywhere py-4 max-w-[330px]">
+                {post.content}
+                {post.image_url && (
+                  <div className="mt-2 overflow-hidden rounded-lg h-auto w-32">
+                    <img
+                      src={post.image_url}
+                      alt="Post image"
+                      className="w-full h-auto object-cover"
+                    />
+                  </div>
+                )}
+              </DrawerDescription>
             </DrawerHeader>
             <CommentForm
               className="px-4"
@@ -136,12 +149,14 @@ const DrawerDialog: React.FC<DrawerDialogProps> = ({
             />
             <DrawerFooter className="pt-2">
               <DrawerClose asChild>
-                <Button variant="outline">Cancel</Button>
+                <Button variant="outline">Close</Button>
               </DrawerClose>
             </DrawerFooter>
           </div>
         ) : (
-          <LogInButton />
+          <div className="flex justify-center py-8">
+            <LogInButton />
+          </div>
         )}
       </DrawerContent>
     </Drawer>

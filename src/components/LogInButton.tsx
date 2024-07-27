@@ -34,7 +34,7 @@ function LogInButton() {
     }
   };
   return (
-    <div>
+    <div className="flex items-center">
       <AuthButton
         variant="slim"
         onClick={() => handleSubmit()}
@@ -43,7 +43,8 @@ function LogInButton() {
         <span className="mr-2">
           <Github className="h-5 w-5" />
         </span>
-        <span>Sign In with GitHub</span>
+        <span className="hidden sm:block">Sign In with GitHub</span>{" "}
+        <span className="sm:hidden block">Sign In</span>
       </AuthButton>
     </div>
   );
