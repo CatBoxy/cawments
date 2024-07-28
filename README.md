@@ -1,36 +1,84 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# Crow-sourced Conversations
 
-## Getting Started
+## Overview
 
-First, run the development server:
+Crow-sourced Conversations is a simple post site where users can log in, create posts with text or images, and comment on other users' posts. The application is built using Next.js with TypeScript for the frontend and Supabase for the backend and authentication.
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+## Architecture
+
+The application follows a client-server architecture:
+
+- Frontend: Next.js with TypeScript
+- Backend: Supabase (PostgreSQL database)
+- Authentication: GitHub OAuth via Supabase
+- Image Storage: Supabase Storage
+
+Key components:
+
+1. `PostContainer`: Manages the state and rendering of posts
+2. `CommentContainer`: Handles comments for individual posts
+3. `actions.ts`: Server-side actions for interacting with Supabase
+4. `Post` and `PostList` components: Render individual posts and lists of posts
+
+## Approach and Methodology
+
+1. User Authentication: Implemented using Supabase's GitHub OAuth integration
+2. Server-Side Rendering: Utilized Next.js's SSR capabilities for initial data fetching
+3. Client-Side Updates: Implemented real-time updates for new posts and comments triggered by scrolling
+4. Responsive Design: Used Tailwind CSS for a mobile-first, responsive layout
+5. Image Handling: Implemented image upload and storage using Supabase Storage
+
+## Running the Application Locally
+
+1. Clone the repository:
+
+```
+git clone https://github.com/your-username/crow-sourced-conversations.git
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+```
+cd crow-sourced-conversations
+```
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+2. Install dependencies:
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+```
+npm install
+```
 
-## Learn More
+3. Set up Supabase environment variables:
+   Create a `.env` file in the root directory with the following variables:
 
-To learn more about Next.js, take a look at the following resources:
+```
+NEXT_PUBLIC_SUPABASE_URL=your_supabase_project_url
+NEXT_PUBLIC_SUPABASE_ANON_KEY=your_supabase_anon_key
+```
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+4. Run the development server:
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+```
+npm run dev
+```
 
-## Deploy on Vercel
+5. Open [http://localhost:3000](http://localhost:3000) in your browser
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## Testing
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+To run the tests:
+
+```
+npm test
+```
+
+## Deployment
+
+The application is deployed on Vercel. You can view the live version at: [https://cawments.vercel.app/](https://cawments.vercel.app/)
+
+## Features
+
+- User authentication with GitHub
+- Create posts with text and images
+- View all posts
+- Comment on posts with text and images
+- Responsive design for various screen sizes
+- Real-time updates for new posts and comments
