@@ -63,11 +63,11 @@ The following process was followed while developing the application:
 1. Clone the repository:
 
 ```
-git clone https://github.com/your-username/crow-sourced-conversations.git
+git clone git@github.com:CatBoxy/cawments.git
 ```
 
 ```
-cd crow-sourced-conversations
+cd cawments
 ```
 
 2. Install dependencies:
