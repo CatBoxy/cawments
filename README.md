@@ -1,8 +1,8 @@
-# Crow-sourced Conversations
+# Cawments
 
 ## Overview
 
-Crow-sourced Conversations is a simple post site where users can log in, create posts with text or images, and comment on other users' posts. The application is built using Next.js with TypeScript for the frontend and Supabase for the backend and authentication.
+Cawments is a simple post site where users can log in, create posts with text or images, and comment on other users' posts. The application is built using Next.js with TypeScript for the frontend and Supabase for the backend and authentication.
 
 ## Architecture
 
@@ -27,6 +27,36 @@ Key components:
 3. Client-Side Updates: Implemented real-time updates for new posts and comments triggered by scrolling
 4. Responsive Design: Used Tailwind CSS for a mobile-first, responsive layout
 5. Image Handling: Implemented image upload and storage using Supabase Storage
+
+## Development Process
+
+The following process was followed while developing the application:
+
+- **Project Setup**
+  - Initialize a Next.js project with TypeScript.
+  - Set up TailwindCSS and shadcd/ui for styling.
+  - Configure Supabase for the backend.
+  - Initialize a Git repository and set up continuous deployment with Vercel.
+- **User Authentication**
+  - Implement GitHub OAuth with Supabase for user authentication.
+  - Create sign-up and sign-out functionality.
+- **Post Creation**
+  - Create a form for authenticated users to post text or images.
+  - Handle image uploads using Supabase Storage.
+  - Save posts to the database.
+- **Post Viewing**
+  - Display posts to all users, authenticated or not.
+- **Commenting**
+  - Create a form for authenticated users to comment on posts with text or images.
+  - Save comments to the database.
+- **Comment Viewing**
+  - Display comments for each post to all users.
+- **Responsive Design**
+  - Ensure the site is responsive and works on different screen sizes.
+- **Testing**
+  - Write tests for various parts of the application.
+- **Documentation**
+  - Write a README.md file with all necessary instructions and explanations.
 
 ## Running the Application Locally
 
