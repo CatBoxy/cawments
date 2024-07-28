@@ -15,8 +15,8 @@ The application follows a client-server architecture:
 
 Key components:
 
-1. `PostContainer`: Manages the state and rendering of posts
-2. `CommentContainer`: Handles comments for individual posts
+1. `PostContainer`: Handles the state and rendering of posts
+2. `CommentContainer`: Handles the state and rendering of comments for individual posts
 3. `actions.ts`: Server-side actions for interacting with Supabase
 4. `Post` and `PostList` components: Render individual posts and lists of posts
 
@@ -27,6 +27,7 @@ Key components:
 3. Client-Side Updates: Implemented real-time updates for new posts and comments triggered by scrolling
 4. Responsive Design: Used Tailwind CSS for a mobile-first, responsive layout
 5. Image Handling: Implemented image upload and storage using Supabase Storage
+6. Database Schema: Created one table for users: User and one table for posts and comments: Post. The difference between a post and a comment is that a comment has a reference to a parent post through the parent_id field and a post does not.
 
 ## Development Process
 
@@ -112,3 +113,10 @@ The application is deployed on Vercel. You can view the live version at: [https:
 - Comment on posts with text and images
 - Responsive design for various screen sizes
 - Real-time updates for new posts and comments
+
+## Possible future Improvements
+
+- Create one single component as Post/Comment form to implement in the Home page, single Post page and comment dialog
+- Implement loaders/Toasters for improved user feedback when a post or comment is created
+- Preview uploaded images in the Postform component
+- Implement skeleton components for loading Posts
